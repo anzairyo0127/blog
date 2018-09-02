@@ -1,0 +1,15 @@
+{% extends "layout.html" %} {% block content %}
+
+<body>
+  <table border=1>
+    {% for user in users%}
+    <tr>
+      <td>{{ user.user }}</td>
+      <td>{{ user.email }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br>
+  <a href="{{ url_for('index') }}">index</a>
+</body>
+{% endblock %}

@@ -1,0 +1,82 @@
+version: "3"
+services:
+    db57:
+        env_file: .env
+        build: ./db
+        image: ${image_name_mysql}
+        container_name: ${container_name_mysql}
+        volumes:
+            - ./db/init.d:/docker-entrypoint-initdb.d
+        environment:
+            FLASK_CTR_NAME: ${container_name_flask}
+            NGINX_CTR_NAME: ${container_name_nginx}
+            MYSQL_CTR_NAME: ${container_name_mysql}
+            MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
+            MYSQL_USER: ${USER_NAME}
+            MYSQL_PASSWORD: ${USER_PASS}
+            TZ: "Asia/Tokyo"
+        ports:
+            - "${port_of_mysql}"
+        networks:
+            aplication_net:
+                ipv4_address: 172.19.0.2
+
+    flask_app:
+        env_file: .env
+        container_name: ${container_name_flask}
+        build: ./flask_app
+        image: ${image_name_flask}
+        volumes:
+            - ./flask_app/config/:${container_mountpoint_uwsgi}
+            - ./flask_app/www/:${container_mountpoint_www}
+        ports:
+            - "${port_of_flask}"
+        environment:
+            UWSGI_DIR: ${container_mountpoint_www}
+            MYSQL_CTR_NAME: ${container_name_mysql}
+            TZ: "Asia/Tokyo"
+        stdin_open: true
+        tty: true 
+        depends_on:
+            - db57
+        #entrypoint: bash /var/www/wait-for-it.sh
+        #command: bash /var/www/wait-for-it.sh python /var/www/first.py && 
+        command: uwsgi --ini ${container_mountpoint_uwsgi}uwsgi.ini
+        networks:
+            aplication_net:
+                ipv4_address: 172.19.0.3
+
+
+    nginx:
+        env_file: .env
+        container_name: ${container_name_nginx}
+        build: ./nginx
+        image: ${image_name_nginx}
+        volumes:
+            - ./nginx/publich:/hostos/publich/
+            - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf
+            - ./nginx/config/flask_app.conf:/etc/nginx/conf.d/flask_app.conf
+        ports:
+            - "${port_of_nginx}"
+        environment:
+            FLASK_CTR_NAME: ${container_name_flask}
+            NGINX_CTR_NAME: ${container_name_nginx}
+            MYSQL_CTR_NAME: ${container_name_mysql}
+            TZ: "Asia/Tokyo"
+        depends_on:
+            - flask_app
+            - db57
+        stdin_open: true
+        tty: true
+        networks:
+            aplication_net:
+                ipv4_address: 172.19.0.4
+
+networks:
+    aplication_net: 
+        driver: bridge
+        ipam:
+            driver: default 
+            config: 
+            - subnet: 172.19.0.0/24
+        
