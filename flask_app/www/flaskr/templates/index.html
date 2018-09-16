@@ -1,5 +1,5 @@
- {% extends "layout.html" %}
- {% block content %}
+{% extends "layout.html" %}
+{% block content %}
 
 <!-- Main Content -->
 <div class="container">
@@ -7,14 +7,18 @@
     <div class="col-lg-8 col-md-10 mx-auto">
       <div class="post-preview">
         <a href={{ url_for( 'post' )}}>
+          {% for entry in entries %}
           <h2 class="post-title">
-            {{ blog.tilte }}
+            {{ entry.title }}
           </h2>
           <h3 class="post-subtitle">
-            {{ blog.honbun }}
+            {{ entry.text|safe }}
+            {% else %}
+            <em>Unbelievable. No entries here so far</em>
           </h3>
+          {%endfor%}
         </a>
-        <p class="post-meta">Posted by Lion_Albatross on {{ blog.created_at }}</p>
+        <p class="post-meta">Posted by Lion_Albatross on</p>
       </div>
       <hr>
 
