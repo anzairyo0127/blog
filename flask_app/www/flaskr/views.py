@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, url_for, flash
+from flask import Flask, render_template, request, url_for, flash, redirect
 from flaskr import app, db
 from flaskr.models import Entry
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
     entries = Entry.query.order_by(Entry.id.desc()).all()
     return render_template(
@@ -12,9 +12,13 @@ def index():
     )
 
 
-@app.route('/post')
-def post():
-    return render_template('post.html')
+@app.route('/post/<post_id>')
+def post(post_id):
+    entry = Entry.query.filter_by(id=post_id).first_or_404()
+    return render_template(
+        'post.html',
+        entry=entry
+    )
 
 
 @app.route('/about')
@@ -25,3 +29,24 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+
+@app.route('/form')
+def form():
+    return render_template('form.html')
+
+
+@app.route('/confirm', methods=['POST'])
+def confirm():
+    entry = Entry(
+        title=request.form['title'],
+        text=request.form['text']
+    )
+    db.session.add(entry)
+    db.session.commit()
+    return redirect(url_for('index'))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404

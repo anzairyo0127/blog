@@ -35,8 +35,6 @@ services:
             TZ: "Asia/Tokyo"
         stdin_open: true
         tty: true 
-        depends_on:
-            - mysql
         command: sh ${container_mountpoint_shell}command.sh
         networks:
             aplication_net:
@@ -56,8 +54,6 @@ services:
             - "${port_of_nginx}"
         environment:
             TZ: "Asia/Tokyo"
-        depends_on:
-            - mysql
         stdin_open: true
         tty: true
         networks:
