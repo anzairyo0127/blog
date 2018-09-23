@@ -1,1 +1,6 @@
 .env
+.vscode/*
+sand_box/*
+flask_app/www/migrations/*
+flask_app/www/flaskr/__pycache__/*
+flask_app/www/__pycache__/*
