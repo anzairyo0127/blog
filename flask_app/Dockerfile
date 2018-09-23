@@ -5,9 +5,13 @@ ARG uWSGI_Ver="2.0.17"
 ARG pymysql_Ver="0.9.2"
 ARG flask_sqlachemy_Ver="2.3.2"
 ARG flask_migrate_Ver="2.2.1"
+ARG flask_login_Ver="0.4.1"
 
-## flask and virtualenv
+# flask
 RUN pip install Flask==${flask_Ver}
+
+# flask-login
+RUN pip install flask-login==${flask_login_Ver}
 
 # uWSGI
 RUN pip install uwsgi==${uWSGI_Ver}

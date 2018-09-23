@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
-from flaskr import app, db
+from flaskr import app, db, login_user, current_user, login_required
 from flaskr.models import Entry
+from flaskr.login import User, users, user_loader, request_loader
 
 
 @app.route('/')
@@ -45,6 +46,33 @@ def confirm():
     db.session.add(entry)
     db.session.commit()
     return redirect(url_for('index'))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return '''
+               <form action='login' method='POST'>
+                <input type='text' name='email' id='email' placeholder='email'/>
+                <input type='password' name='password' id='password' placeholder='password'/>
+                <input type='submit' name='submit'/>
+               </form>
+               '''
+
+    email = request.form['email']
+    if request.form['password'] == users[email]['password']:
+        user = User()
+        user.id = email
+        login_user(user)
+        return redirect(url_for('protected'))
+
+    return 'Bad login'
+
+
+@app.route('/protected')
+@login_required
+def protected():
+    return 'Logged in as: ' + current_user.id
 
 
 @app.errorhandler(404)
