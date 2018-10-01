@@ -6,7 +6,7 @@ from flaskr.login import User, users, user_loader, request_loader
 
 @app.route('/')
 def index():
-    entries = Entry.query.order_by(Entry.id.desc()).all()
+    entries = Entry.query.order_by(Entry.id.desc()).limit(3).all()
     return render_template(
         'index.html',
         entries=entries
@@ -16,9 +16,11 @@ def index():
 @app.route('/post/<post_id>')
 def post(post_id):
     entry = Entry.query.filter_by(id=post_id).first_or_404()
+    texts = entry.text.split()
     return render_template(
         'post.html',
-        entry=entry
+        entry=entry,
+        texts=texts
     )
 
 
@@ -33,15 +35,21 @@ def contact():
 
 
 @app.route('/form')
+@login_required
 def form():
-    return render_template('form.html')
+    if not current_user.id:
+        return redirect(url_for('login'))
+    else:
+        return render_template('newform.html')
 
 
 @app.route('/confirm', methods=['POST'])
+@login_required
 def confirm():
     entry = Entry(
         title=request.form['title'],
-        text=request.form['text']
+        text=request.form['text'],
+        name=current_user.id
     )
     db.session.add(entry)
     db.session.commit()

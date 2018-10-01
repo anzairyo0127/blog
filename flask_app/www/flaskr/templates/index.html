@@ -12,11 +12,11 @@
             {{ entry.title }}
           </h2>
           <h3 class="post-subtitle">
-            {{ entry.text }}
+            {{ entry.text[:15] + '...' }}
           </h3>
         </a>
         <p class="post-meta">
-          Posted by Lion_Albatross on {{ entry.created_at|safe }}
+          Posted by {{entry.name}} on {{ entry.created_at|safe }}
         </p>
         {% else %}
         <h3>
@@ -27,7 +27,7 @@
       <hr>
       <!-- Pager -->
       <div class="clearfix">
-        <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+        <a class="btn btn-primary float-right" href={{ url_for( 'index' )}}>Older Posts &rarr;</a>
       </div>
     </div>
   </div>

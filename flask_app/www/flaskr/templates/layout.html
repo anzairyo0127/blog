@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Clean Blog - Start Bootstrap Theme</title>
+  <title>メタリオンのブログ</title>
 
   <!-- Bootstrap core CSS -->
   <link href={{ url_for( 'static', filename='vendor/bootstrap/css/bootstrap.min.css' ) }} rel="stylesheet">
@@ -53,9 +53,6 @@
           <li class="nav-item">
             <a class="nav-link" href={{ url_for( 'login' )}}>Login</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href={{ url_for( 'protected' )}}>Protected</a>
-          </li>
         </ul>
       </div>
     </div>
@@ -68,8 +65,10 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>メタリオンのブログ</h1>
-            <span class="subheading">とりあえずつくってみたブログ</span>
+            <a href={{ url_for( 'index' )}}>
+              <h1>メタリオンのブログ</h1>
+              <span class="subheading">とりあえずつくってみたブログ</span>
+            </a>
           </div>
         </div>
       </div>
