@@ -1,10 +1,24 @@
 # 作り途中です
 
-まず`example.env`を`.env`にリネームしてください。
+作り途中なのでまだ適当です。
+
+まず`.env.example`を`.env`にリネームしてください。
+
+リネーム後、`.env`内の以下の設定を変更してください。（やらなくても動くけどメールフォームは動きません）
+
+```
+# Gmailのアドレス
+mail_username=example@gmail.com 
+# 上記Gmailのアドレス。なお、Gmailのセキュリティ警告が出る可能性があります。
+mail_password=example
+# mail_usernameと同じアドレス
+default_mail_sender=example@gmail.com
+```
 
 `docker-compose.yml`の置いてあるディレクトリをカレントディレクトリにした状態で
 
-以下のコマンドを実施。
+以下のコマンドを実施してください。
+
 
 ```
 docker-compose up -d mysql
@@ -32,6 +46,11 @@ DockerMachineやDocker-Toolboxを使っている場合は、その起動したDo
 
 `Nginx`で80番ポートを開けているので見られるはずです。
 
+loginはメールアドレスが`metarion@email.com`　パスワードが`secret`です。
+
+`www/db_create_200.py`は`mysql`コンテナが動いている時に動作させると、適当なブログデータを200個作成します。ページネーションを確認するために作りました。
+
+遊び終わったら`docker-compose down`を押してください。
 
 ## 参考リンク
 https://github.com/planset/study_flask/blob/master/docs/05.rst

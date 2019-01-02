@@ -6,9 +6,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <h2 class="section-heading">{{ entry.title }}</h2>
-        {% for text in texts %}
-        <p>{{ text }}</p>
-        {% endfor %}
+        {{ texts }}
         <hr>
         <p>書いた人:{{ entry.name }}</p>
         <p>更新時刻:{{ entry.created_at }}</p>

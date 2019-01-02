@@ -31,7 +31,11 @@ services:
         environment:
             UWSGI_DIR: ${container_mountpoint_www}
             MYSQL_CTR_NAME: ${container_name_mysql}
+            MAIL_USERNAME: ${mail_username}
+            MAIL_PASSWORD: ${mail_password}
+            DEFAULT_MAIL_SENDER: ${default_mail_sender}
             FLASK_APP: ${flask_managepy}
+            FLASK_CONFIG_STATUS: "dev"
             TZ: "Asia/Tokyo"
         stdin_open: true
         tty: true 
@@ -39,7 +43,6 @@ services:
         networks:
             aplication_net:
                 ipv4_address: 172.19.0.3
-
 
     nginx:
         env_file: .env

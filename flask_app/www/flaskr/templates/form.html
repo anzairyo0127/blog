@@ -1,20 +1,38 @@
-<html lang="ja">
+{% extends "form_head.html" %}
+{% block content %}
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title>フォームのサンプル</title>
-</head>
-
-<body>
-    <h1>フォームサンプル</h1>
-    <form action={{ url_for('confirm') }} method="post">
-        <p>
-            title：<input type="text" name="title" /><br />
-            text：<br />
-            <textarea name="text" rows="8" cols="40"></textarea><br />
-            <input type="submit" name="button1" value="送信" />
-        </p>
-    </form>
-</body>
-
-</html>
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <p>Format</p>
+      <form action={{ url_for('confirm') }} method="post" name="sentMessage" id="contactForm" novalidate>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Title</label>
+            <input type="text" class="form-control" placeholder="Title" name="title" required
+              data-validation-required-message="Please enter your blog title">
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <label>Text</label>
+            <textarea rows="10" class="form-control" placeholder="Text" name="text" required
+              data-validation-required-message="Please enter text."></textarea>
+            <p class="help-block text-danger"></p>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" id="sendMessageButton">プレビュー</button>
+        </div>
+        <div id="success"></div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
