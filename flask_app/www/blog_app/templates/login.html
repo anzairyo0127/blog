@@ -14,11 +14,12 @@
     <link href={{ url_for( 'static', filename='vendor/bootstrap/css/bootstrap.min.css' ) }} rel="stylesheet">
 
     <!-- Custom fonts for this template -->
-    <link href={{ url_for( 'static', filename='vendor/bootstrap/css/font-awesome.min.css' ) }} rel="stylesheet" type="text/css">
-    <link href=' https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic ' rel='stylesheet ' type='text/css '>
+    <link href={{ url_for( 'static', filename='vendor/bootstrap/css/font-awesome.min.css' ) }} rel="stylesheet"
+        type="text/css">
+    <link href=' https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic ' rel='stylesheet '
+        type='text/css '>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800
-    '
-        rel='stylesheet ' type='text/css '>
+    ' rel='stylesheet ' type='text/css '>
 
     <!-- Custom styles for this template -->
     <link href={{ url_for( 'static', filename='css/clean-blog.min.css' )}} rel="stylesheet">
@@ -28,14 +29,15 @@
 <body>
 
     <!-- Navigation -->
-    <div align="right"><a class="nav-link" href={{ url_for( 'index' )}}>Home</a></div>
+    <div align="right"><a class="nav-link" href={{ url_for( 'blog_route.index' )}}>Home</a></div>
 
     <!-- Main Content -->
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <p>Login Format</p>
-                <form action={{ url_for('login') }} method="post" name="sentMessage" id="contactForm" novalidate>
+                <form action={{ url_for('blog_route.login') }} method="post" name="sentMessage" id="contactForm"
+                    novalidate>
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls">
                             <label>Enter Your UserID</label>
@@ -51,7 +53,8 @@
                     </div>
                     <br>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary" id="sendMessageButton" name="submit">Login</button>
+                        <button type="submit" class="btn btn-primary" id="sendMessageButton"
+                            name="submit">Login</button>
                     </div>
                 </form>
             </div>

@@ -1,5 +1,5 @@
-from flaskr import login_manager, UserMixin
-
+from blog_app.logins import login
+from flask_login import UserMixin, current_user, login_required, login_user, logout_user
 # Our mock database.
 users = {'metarion@email.com': {'password': 'secret'}}
 
@@ -8,7 +8,7 @@ class User(UserMixin):
     pass
 
 
-@login_manager.user_loader
+@login.user_loader
 def user_loader(email):
     if email not in users:
         return
@@ -18,7 +18,7 @@ def user_loader(email):
     return user
 
 
-@login_manager.request_loader
+@login.request_loader
 def request_loader(request):
     email = request.form.get('email')
     if email not in users:

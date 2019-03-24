@@ -8,7 +8,7 @@
       <div class="post-preview">
         <!-- dbからデータを取得 -->
         {% for entry in entries.items %}
-        <a href={{ url_for( 'post',post_id=entry.id )}}>
+        <a href={{ url_for( 'blog_route.post',post_id=entry.id )}}>
           <h2 class="post-title">
             {{ entry.title }}
           </h2>
@@ -33,7 +33,7 @@
         {{ page }}
         {% elif page %}
         <!-- Pager -->
-        <a class="btn btn-primary" href={{ url_for( 'thread', page_num=page )}}>{{ page }}</a>
+        <a class="btn btn-primary" href={{ url_for( 'blog_route.thread', page_num=page )}}>{{ page }}</a>
         {% else %}
         ...
         {% endif %}

@@ -1,17 +1,19 @@
 '''
 "View" of Flask Web Application  
 '''
-
-from flask import Flask, render_template, request, url_for, flash, redirect, Markup
-from flaskr import app, db, login_user, current_user, mail, login_required, logout_user, Message
-from flaskr.models import Entry
-from flaskr.login import User, users, user_loader, request_loader
-import markdown
-
 import os
 
+from flask import Flask, render_template, request, url_for, flash, redirect, Markup, Blueprint
+import markdown
 
-@app.route('/')
+from blog_app.models.model import db, Entry
+from blog_app.models.login import User, users, current_user, login_required, login_user, logout_user
+from blog_app.mails import mail, Message
+
+blog_route = Blueprint('blog_route', __name__)
+
+
+@blog_route.route('/')
 def index():
     '''
     show main page
@@ -25,7 +27,7 @@ def index():
     )
 
 
-@app.route('/thread/<int:page_num>')
+@blog_route.route('/thread/<int:page_num>')
 def thread(page_num):
     '''
     show main page
@@ -39,7 +41,7 @@ def thread(page_num):
     )
 
 
-@app.route('/post/<post_id>')
+@blog_route.route('/post/<post_id>')
 def post(post_id):
     entry = Entry.query.filter_by(id=post_id).first_or_404()
     texts = Markup(markdown.markdown(entry.text))
@@ -50,17 +52,17 @@ def post(post_id):
     )
 
 
-@app.route('/about')
+@blog_route.route('/about')
 def about():
     return render_template('about.html')
 
 
-@app.route('/contact')
+@blog_route.route('/contact')
 def contact():
     return render_template('contact.html')
 
 
-@app.route('/send_to_mail', methods=['POST'])
+@blog_route.route('/send_to_mail', methods=['POST'])
 def send_to_mail():
     name = request.form['name']
     mes = request.form['message']
@@ -75,30 +77,30 @@ def send_to_mail():
         )
         mail.send(msg)
 
-    return redirect(url_for('index'))
+    return redirect(url_for('blog_route.index'))
 
 
-@app.route('/form')
+@blog_route.route('/form')
 @login_required
 def form():
     if not current_user.id:
-        return redirect(url_for('login'))
+        return redirect(url_for('blog_route.login'))
     else:
         return render_template('form.html')
 
 
-@app.route('/form_review', methods=['POST'])
+@blog_route.route('/form_review', methods=['POST'])
 @login_required
 def form_review():
     if not current_user.id:
-        return redirect(url_for('login'))
+        return redirect(url_for('blog_route.login'))
     else:
         title = request.form['title']
 
         return title
 
 
-@app.route('/confirm', methods=['POST'])
+@blog_route.route('/confirm', methods=['POST'])
 @login_required
 def confirm():
     entry = Entry(
@@ -108,10 +110,10 @@ def confirm():
     )
     db.session.add(entry)
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('blog_route.index'))
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@blog_route.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
@@ -121,25 +123,25 @@ def login():
         user = User()
         user.id = email
         login_user(user)
-        return redirect(url_for('form'))
+        return redirect(url_for('blog_route.form'))
 
     return 'Bad login'
 
 
-@app.route('/protected')
+@blog_route.route('/protected')
 @login_required
 def protected():
     return 'Logged in as: ' + current_user.id
 
 
-@app.route('/logout')
+@blog_route.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('blog_route.index'))
 
 
-@app.route('/list_of_article')
+@blog_route.route('/list_of_article')
 def list_of_article():
     logout_user()
     page = 1
@@ -149,9 +151,8 @@ def list_of_article():
         'index.html',
         entries=entries
     )
-    return render_template('admin_art_list.html')
 
 
-@app.errorhandler(404)
+@blog_route.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

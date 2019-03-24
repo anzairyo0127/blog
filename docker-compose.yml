@@ -5,6 +5,9 @@ services:
         build: ./db
         image: ${image_name_mysql}
         container_name: ${container_name_mysql}
+        volumes:
+            - ./db/data:${container_mountpoint_db_data}
+            - ./db/init:${container_mountpoint_db_initsql}
         environment:
             MYSQL_DATABASE: ${DB_NAME}
             MYSQL_ROOT_PASSWORD: ${ROOT_PASS}

@@ -1,11 +1,9 @@
 '''
 Models
 '''
-
-
 from datetime import datetime
 
-from flaskr import db
+from blog_app.database import db
 
 
 class Entry(db.Model):

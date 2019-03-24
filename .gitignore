@@ -1,10 +1,7 @@
 .env
-.vscode/*
-sand_box/*
-flask_app/www/migrations/*
-flask_app/www/flaskr/__pycache__/*
-flask_app/www/__pycache__/*
-flask_app/www/flaskr/__pycache__/views.cpython-36.pyc
-flask_app/www/flaskr/__pycache__/__init__.cpython-36.pyc
-flask_app/www/flaskr/__pycache__/config.cpython-36.pyc
-flask_app/www/flaskr/__pycache__/models.cpython-36.pyc
+.vscode/
+sand_box/
+flask_app/www/migrations/
+flask_app/www/__pycache__/
+flask_app/www/blog_app/__pycache__/
+db/data/
