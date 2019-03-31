@@ -27,3 +27,9 @@ class Production(object):
         db_user=db_user,
         db_password=db_password
     )
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    DEFAULT_MAIL_SENDER = os.getenv('DEFAULT_MAIL_SENDER')

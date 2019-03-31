@@ -26,7 +26,7 @@ services:
         build: ./flask_app
         image: ${image_name_flask}
         volumes:
-            - ./flask_app/config/:${container_mountpoint_uwsgi}
+            - ./flask_app/uwsgi/:${container_mountpoint_uwsgi}
             - ./flask_app/www/:${container_mountpoint_www}
             - ./flask_app/shell/:${container_mountpoint_shell}
         ports:
@@ -37,12 +37,12 @@ services:
             MAIL_USERNAME: ${mail_username}
             MAIL_PASSWORD: ${mail_password}
             DEFAULT_MAIL_SENDER: ${default_mail_sender}
-            FLASK_APP: ${flask_managepy}
+            FLASK_APP: ${flask_apppy}
             FLASK_CONFIG_STATUS: "dev"
             TZ: "Asia/Tokyo"
         stdin_open: true
         tty: true 
-        command: sh ${container_mountpoint_shell}command.sh
+        command: sh ${container_mountpoint_www}command.sh
         networks:
             aplication_net:
                 ipv4_address: 172.19.0.3

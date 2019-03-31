@@ -1,5 +1,6 @@
-from blog_app.logins import login
-from flask_login import UserMixin, current_user, login_required, login_user, logout_user
+from flask_login import UserMixin
+
+from objects.logins import login
 # Our mock database.
 users = {'metarion@email.com': {'password': 'secret'}}
 

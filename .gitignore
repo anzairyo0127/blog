@@ -1,7 +1,7 @@
 .env
-.vscode/
-sand_box/
-flask_app/www/migrations/
-flask_app/www/__pycache__/
-flask_app/www/blog_app/__pycache__/
-db/data/
+.vscode
+sand_box
+__pycache__
+.mypy_cache
+db/data
+flask_app/www/migrations
